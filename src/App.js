@@ -1,5 +1,6 @@
 
 import './App.css';
+import NewForm from './component/NewForm';
 import StudentForm from './component/StudentForm';
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
     <div className="App">
      students dashboard
      <div>
-     <StudentForm />
+     {/* <StudentForm /> */}
+     <NewForm />
      </div>
     </div>
   );
