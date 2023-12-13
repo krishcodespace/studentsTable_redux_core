@@ -6,6 +6,7 @@ import Remove from "../assets/remove.png";
 
 function NewForm() {
     const final = useSelector((state)=> state.studentReducer.finalD);
+
     console.log('final', final)
 
     const [editData, setEditData] = useState(null)
@@ -15,7 +16,6 @@ function NewForm() {
     name: '',
     address: '',
     gender: '',
-    // hobbies: [],
     dob: '',
   });
 
@@ -25,32 +25,7 @@ function NewForm() {
   
 
   const handleChange = (e) => {
-    // const { name, value, type, checked } = e.target;
 
-    // if (type === 'checkbox') {
-    //   const updatedHobbies = checked
-    //     ? [...inputdata.hobbies, value]
-    //     : inputdata.hobbies.filter((hobby) => hobby !== value);
-
-    //   setInputdata((prevData) => ({
-    //     ...prevData,
-    //     hobbies: updatedHobbies,
-    //   }));
-    // } else {
-    //   setInputdata((prevData) => ({
-    //     ...prevData,
-    //     [name]: value,
-    //   }
-      
-    //   ));
-
-      
-
-    // }
-
-
-
-  
 
     setInputdata({...inputdata, [e.target.name] : e.target.value})
     console.log('inputdata', inputdata);
@@ -58,14 +33,12 @@ function NewForm() {
 
 
   const handleSubmit=()=>{
-
+   console.log('inputdata', inputdata)
     dispatch(setStudentData(inputdata));
-    console.log('inputdata', inputdata);
     setInputdata({
         name: '',
         address: '',
         gender: '',
-        // hobbies: [],
         dob: '',
     })
   }
@@ -87,48 +60,38 @@ function NewForm() {
         name:item?.name,
         address:item?.address,
         gender:item?.gender,
+        hobbies:item?.hobbies?.[0],
         dob:item?.dob,
 
       })
+      console.log('inputedit', inputdata)
       setshowBtn(true);
       console.log('editdata', editData)
-    //   setEditindex(index)
-      
-    //   setShow(true)
-      
-//   console.log('edit', editData)
-//   dispatch(updateData(index,editdata))
-  
 }
 
     const handleUpdate=()=>{
-        
-     
     const editdata = inputdata;  
     console.log('editdata', editdata)
-       dispatch(updateData(index,editdata))
+    dispatch(updateData(index,editdata))
 
 
     setInputdata({
         name: '',
         address: '',
         gender: '',
-        // hobbies: [],
         dob: '',
     })
     setIndex(null)
     setshowBtn(false)
-//     const index = editindex
-//   dispatch(updateData(index,editdata))
-
 
     }
 
 
   return (
     <div>
-      <div className="inputfeilds">
+      <div className="inputfeilds w-full h-[250px] flex flex-col justify-center items-center ">
         <input
+          className='w-1/4'
           type="text"
           name="name"
           value={inputdata.name}
@@ -136,87 +99,38 @@ function NewForm() {
           placeholder="Name"
         />
         <input
+          className='w-1/4 mt-4'
+
           type="text"
           name="address"
           value={inputdata.address}
           onChange={handleChange}
           placeholder="Address"
         />
-
-        {/* <div>
-          <label>
+         <label className='mt-2'>
             Gender:
-            <select
-              name="gender"
-              value={inputdata.gender}
-              onChange={handleChange}
-            >
-              <option value="">Select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </label>
-        </div> */}
+            <input
+            className='mx-2'
+            type="radio"
+            name="gender"
+            value="male"
+            checked={inputdata.gender === 'male'}
+            onChange={handleChange}
+            />
+            Male
+            <input
+            className='mx-2'
 
-        {/* <div>
-          <label>
-            Hobbies:
-            <div>
-              <input
-                type="checkbox"
-                name="reading"
-                value="reading"
-                checked={inputdata.hobbies.includes('reading')}
-                onChange={handleChange}
-              />
-              Reading
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                name="traveling"
-                value="traveling"
-                checked={inputdata.hobbies.includes('traveling')}
-                onChange={handleChange}
-              />
-              Traveling
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                name="sport"
-                value="sport"
-                checked={inputdata.hobbies.includes('sport')}
-                onChange={handleChange}
-              />
-              Sport
-            </div>
-          </label>
-        </div> */}
+            type="radio"
+            name="gender"
+            value="female"
+            checked={inputdata.gender === 'female'}
+            onChange={handleChange}
+            />
+            Female
+        </label>
 
-        <label>
-    Gender:
-    <input
-      type="radio"
-      name="gender"
-      value="male"
-      checked={inputdata.gender === 'male'}
-      onChange={handleChange}
-    />
-    Male
-    <input
-      type="radio"
-      name="gender"
-      value="female"
-      checked={inputdata.gender === 'female'}
-      onChange={handleChange}
-    />
-    Female
-  </label>
-
-  
-
-        <div>
+        <div className='mt-2'>   
           <label>
             Date of Birth:
             <input
@@ -228,7 +142,7 @@ function NewForm() {
           </label>
         </div>
         {
-            showbtn ? <button type='button' onClick={handleUpdate}>update</button> :<button type='submit' onClick={handleSubmit}>
+            showbtn ? <button className='mt-2 border w-1/6' type='button' onClick={handleUpdate}>update</button> :<button className='mt-2 border w-1/6' type='submit' onClick={handleSubmit}>
             add
         </button>
         }
@@ -238,7 +152,7 @@ function NewForm() {
 
       {/* table start here*/}
 
-      <div className="table">
+      <div className="table w-full ">
       <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

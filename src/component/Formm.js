@@ -1,54 +1,68 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
-import { deleteData, setStudentData, updateData } from '../redux/action/action';
-import Table from '../helper/Table';
+import { deleteData, setStudentData,updateData } from '../redux/action/action';
 import Edit from "../assets/edit.png";
 import Remove from "../assets/remove.png";
 
-
-function Formm() {
-
-    const data = useSelector((state)=> state.studentReducer.studentData);
-    // console.log('data', data)
+function NewForm() {
     const final = useSelector((state)=> state.studentReducer.finalD);
-    // console.log('final', final)
-      // State variables for form inputs
+    console.log('final', final)
 
- const [value, setvalue] = useState({
-    name:"",    
-    address:"",
-    gender:"",
-    hobbies:[],
-    dob:"",
- })
+    const [editData, setEditData] = useState(null)
+    const [showbtn, setshowBtn] = useState(false)
+    const [index, setIndex] = useState(null)
+  const [inputdata, setInputdata] = useState({
+    name: '',
+    address: '',
+    gender: '',
+    hobbies: [],
+    dob: '',
+  });
 
-  console.log('value', value)
+  const dispatch = useDispatch();
 
-
-
-
-
-
-  // Handle checkbox change
- 
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-
-console.log('e', e)
-    
- 
 
   
-  
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+console.log('name,value,type,checked', name,value,type,checked)
+
+    if (type === 'checkbox') {
+      const updatedHobbies = checked
+        ? [...inputdata.hobbies, value]
+        : inputdata.hobbies.filter((hobby) => hobby !== value);
+
+      setInputdata((prevData) => ({
+        ...prevData,
+        hobbies: updatedHobbies,
+      }));
+    } else {
+      setInputdata((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }
       
-      dispatch(setStudentData(formData))
-    // Log form values
-        console.log('formData', formData)
+      ));
 
-        setShow(false)
+    }
 
-        };
+    // setInputdata({...inputdata, [e.target.name] : e.target.value})
+    // console.log('inputdata', inputdata);
+  };
+
+
+  const handleSubmit=()=>{
+   console.log('inputdata', inputdata)
+    dispatch(setStudentData(inputdata));
+    setInputdata({
+        name: '',
+        address: '',
+        gender: '',
+        hobbies: [],
+        dob: '',
+    })
+  }
 
   const handleRemove=(id)=>{
 
@@ -59,12 +73,24 @@ console.log('e', e)
 
 
 
-  const setEditValue=(editdata,index)=>{
+  const setEditValue=(item,index)=>{
     console.log('index', index)
-      setEditData(editdata)
-      setEditindex(index)
+    setIndex(index)
+      setEditData(item)
+      setInputdata({
+        name:item?.name,
+        address:item?.address,
+        gender:item?.gender,
+        hobbies:item?.hobbies?.[0],
+        dob:item?.dob,
+
+      })
+      console.log('inputedit', inputdata)
+      setshowBtn(true);
+      console.log('editdata', editData)
+    //   setEditindex(index)
       
-      setShow(true)
+    //   setShow(true)
       
 //   console.log('edit', editData)
 //   dispatch(updateData(index,editdata))
@@ -72,157 +98,124 @@ console.log('e', e)
 }
 
     const handleUpdate=()=>{
-    console.log('name.address,gender,dob', name,address,gender,dob)
-    const editdata = editData;  
-    const index = editindex
-  dispatch(updateData(index,editdata))
+        
+     
+    const editdata = inputdata;  
+    console.log('editdata', editdata)
+       dispatch(updateData(index,editdata))
+
+
+    setInputdata({
+        name: '',
+        address: '',
+        gender: '',
+        hobbies: [],
+        dob: '',
+    })
+    setIndex(null)
+    setshowBtn(false)
+//     const index = editindex
+//   dispatch(updateData(index,editdata))
 
 
     }
 
 
+  return (
+    <div>
+      <div className="inputfeilds">
+        <input
+          type="text"
+          name="name"
+          value={inputdata.name}
+          onChange={handleChange}
+          placeholder="Name"
+        />
+        <input
+          type="text"
+          name="address"
+          value={inputdata.address}
+          onChange={handleChange}
+          placeholder="Address"
+        />
+        <label>
+    Gender:
+    <input
+      type="radio"
+      name="gender"
+      value="male"
+      checked={inputdata.gender === 'male'}
+      onChange={handleChange}
+    />
+    Male
+    <input
+      type="radio"
+      name="gender"
+      value="female"
+      checked={inputdata.gender === 'female'}
+      onChange={handleChange}
+    />
+    Female
+  </label>
 
-    return (
-        <>
-        <div className="content">
+  <label>
+    Hobbies:
+    <div>
+      <input
+        type="checkbox"
+        name="reading"
+        value="reading"
+        checked={inputdata.hobbies === "reading"}
+        onChange={handleChange}
+      />
+      Reading
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        name="traveling"
+        value="traveling"
+        checked={inputdata.hobbies === "traveling"}
+        onChange={handleChange}
+      />
+      Traveling
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        name="chess"
+        value="chess"
+        checked={inputdata.hobbies === "chess"}
+        onChange={handleChange}
+      />
+      chess
+    </div>
+  </label>
 
-        <div className="formd">
-
-        <div className='flex m-2 justify-between' 
-        // onSubmit={handleSubmit}
-        >
-          {/* Name Field */}
+        <div>
           <label>
-            Name:
+            Date of Birth:
             <input
-             type="text"
-             name='name' value="name"
-             onChange={handleChange(e)}
-              />
-          </label>
-          <br />
-    
-          {/* Address Field */}
-          <label>
-            Address:
-            <input type="text" 
-            name='address' value="address"   onChange={handleChange(e)}
- /> 
-          </label>
-          <br />
-    
-          {/* Gender Field */}
-          <label>
-            Gender:
-            <label className='mx-3'>
-              <input
-                type="radio"
-                value="male"
-                name='male'
-                // checked={gender === 'male' }
-                checked={gender === 'male'}
-
-                // onChange={() => setGender('male')}
-             onChange={handleChange(e)}
-
-              />
-              Male
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="female"
-                name='female'
-                checked={gender === 'female'}
-              
-                // onChange={() => setGender('female')}
-             onChange={handleChange(e)}
-
-
-              />
-              Female
-            </label>
-          </label>
-          <br />
-    
-          {/* Hobby Field */}
-          <label>
-            Hobbies:
-            <label className='mx-3'>
-              <input className='mx-1'
-                type="checkbox"
-                value="reading"
-                name='reading'
-                checked={hobbies.includes('reading')}
-              
-                // onChange={handleCheckboxChange}
-                onChange={handleChange(e)}
-
-              />
-              Reading
-            </label>
-            <label>
-              <input  
-              className='mx-1'
-                type="checkbox"
-                value="traveling"
-                name='traveling'
-                checked={hobbies.includes('traveling')}
-             
-             onChange={handleChange(e)}
-
-              />
-              Traveling
-            </label>
-            <input
-             className='mx-1'
-                type="checkbox"
-                value="chess"
-                name='chess'
-                checked={hobbies.includes('chess')}
-             
-             onChange={handleChange(e)}
-
-              />
-              chess
-            {/* Add more hobbies as needed */}
-          </label>
-          <br />
-    
-          {/* Date of Birth Field */}
-          <label htmlFor="birthday">Dob</label>
-            <input
-            type="date"
-            id="birthday"
-            name="dob"
-            value="dob"
-            // onChange={(e)=> setDob(e.target.value)}
-            onChange={handleChange(e)}
-
+              type="date"
+              name="dob"
+              value={inputdata.dob}
+              onChange={handleChange}
             />
-         
-          <br />
-    
-          {/* Submit Button */}
-          {
-            show?
-            <button type='button' onClick={handleUpdate}>update</button> : 
-
-          <button 
-          type="button"
-        onClick={handleSubmit}
-          
-          >Submit</button>
-          }
+          </label>
+        </div>
+        {
+            showbtn ? <button type='button' onClick={handleUpdate}>update</button> :<button type='submit' onClick={handleSubmit}>
+            add
+        </button>
+        }
         
-        </div>
-        </div>
+      </div>
 
 
-    
-     
+      {/* table start here*/}
 
-            <div className="overflow-x-auto">
+      <div className="table">
+      <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -294,12 +287,9 @@ console.log('e', e)
                 </table>
             </div>
 
-
-        </div>
-
-        </>
-
-);
+      </div>
+    </div>
+  );
 }
 
-export default Formm
+export default NewForm;
