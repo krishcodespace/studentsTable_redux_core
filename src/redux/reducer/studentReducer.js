@@ -112,18 +112,57 @@ const studentReducer = (state = initialState, action) => {
         finalD:state.studentData.filter((_, i) => i !== action.payload),
       };
       case UPDATE:
-        console.log('action.payload', action.payload)
+        console.log('actionupdate', action.payload)
         return {
-            ...state,
-            finalD:state.studentData.map((student,index) =>
-              student.index === action.payload.index
-                ? {
-                    ...student,
-                    ...action.payload.editdata,
-                  }
-                : student
-            ),
-          };
+          ...state,
+          finalD: state.finalD.map((item, i) =>
+          // when action.paylod index is match to finalD items then payload eidtdata take and not update then take item as well as
+            i === action.payload.index ? action.payload.editdata : item
+          ),
+        };
+ 
+    default:
+      return state;
+  }
+};
+
+export default studentReducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       // return {
+        //     ...state,
+        //     finalD:state.studentData.map((student,index) =>
+        //       student.index === action.payload.index
+        //         ? {
+        //             ...student,
+        //             ...action.payload.editdata,
+        //           }
+        //         : student
+        //     ),
+        //   };
 
     //   const { index, editdata } = action.payload;
     //   console.log('updateData', editdata)
@@ -134,9 +173,3 @@ const studentReducer = (state = initialState, action) => {
     //     ...state,
     //     studentData: updatedStudentData,
     //   };
-    default:
-      return state;
-  }
-};
-
-export default studentReducer;

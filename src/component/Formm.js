@@ -6,76 +6,46 @@ import Edit from "../assets/edit.png";
 import Remove from "../assets/remove.png";
 
 
-function StudentForm() {
+function Formm() {
 
     const data = useSelector((state)=> state.studentReducer.studentData);
     // console.log('data', data)
     const final = useSelector((state)=> state.studentReducer.finalD);
     // console.log('final', final)
       // State variables for form inputs
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [gender, setGender] = useState('');
-  const [hobbies, setHobbies] = useState([]);
-  const [dob, setDob] = useState('');
-  const [editData, setEditData] = useState();
-  const [finalData, setFinalData] = useState();
-  const [show, setShow] = useState(false);
-  const [editindex, setEditindex] = useState();
 
- 
+ const [value, setvalue] = useState({
+    name:"",    
+    address:"",
+    gender:"",
+    hobbies:[],
+    dob:"",
+ })
 
+  console.log('value', value)
 
 
 
-const dispatch  = useDispatch();
 
 
 
   // Handle checkbox change
-  const handleCheckboxChange = (e) => {
-    const hobby = e.target.value;
-    if (e.target.checked) {
-      // Add hobby to the list
-      setHobbies([...hobbies, hobby]);
-    } else {
-      // Remove hobby from the list
-      setHobbies(hobbies.filter((h) => h !== hobby));
-    }
-  };
+ 
 
   // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
 
-
+console.log('e', e)
     
+ 
 
-    // const formData = {
-    //     name: name || editData?.name,
-    //     address: address || editData?.address,
-    //     gender: gender|| editData?.gender,
-    //     hobbies: hobbies || editData?.hobbies?.[0],
-    //     dob: dob || editData.dob,
-    //   };
   
-    const formData = {
-        name: name ,
-        address: address ,
-        gender: gender,
-        hobbies: hobbies,
-        dob: dob,
-      };
   
       
       dispatch(setStudentData(formData))
     // Log form values
         console.log('formData', formData)
 
-        setName("");
-        setAddress("");
-        setGender("");
-        setHobbies([]);
-        setDob("")
         setShow(false)
 
         };
@@ -104,8 +74,8 @@ const dispatch  = useDispatch();
     const handleUpdate=()=>{
     console.log('name.address,gender,dob', name,address,gender,dob)
     const editdata = editData;  
-//     const index = editindex
-//   dispatch(updateData(index,editdata))
+    const index = editindex
+  dispatch(updateData(index,editdata))
 
 
     }
@@ -125,8 +95,9 @@ const dispatch  = useDispatch();
           <label>
             Name:
             <input
-             type="text" value={name || editData?.name } 
-             onChange={(e) => setName(e.target.value)}
+             type="text"
+             name='name' value="name"
+             onChange={handleChange(e)}
               />
           </label>
           <br />
@@ -134,7 +105,9 @@ const dispatch  = useDispatch();
           {/* Address Field */}
           <label>
             Address:
-            <input type="text" value={address || editData?.address} onChange={(e) => setAddress(e.target.value)} />
+            <input type="text" 
+            name='address' value="address"   onChange={handleChange(e)}
+ /> 
           </label>
           <br />
     
@@ -145,10 +118,13 @@ const dispatch  = useDispatch();
               <input
                 type="radio"
                 value="male"
+                name='male'
                 // checked={gender === 'male' }
-                checked={(editData ? editData.gender : gender) === 'male'}
+                checked={gender === 'male'}
 
-                onChange={() => setGender('male')}
+                // onChange={() => setGender('male')}
+             onChange={handleChange(e)}
+
               />
               Male
             </label>
@@ -156,9 +132,12 @@ const dispatch  = useDispatch();
               <input
                 type="radio"
                 value="female"
-                // checked={gender === 'female'}
-                checked={(editData ? editData.gender : gender) === 'female'}
-                onChange={() => setGender('female')}
+                name='female'
+                checked={gender === 'female'}
+              
+                // onChange={() => setGender('female')}
+             onChange={handleChange(e)}
+
 
               />
               Female
@@ -172,10 +151,13 @@ const dispatch  = useDispatch();
             <label className='mx-3'>
               <input className='mx-1'
                 type="checkbox"
-                value={"reading"}
-                // checked={hobbies.includes('reading')}
-                checked={(editData ? editData.hobbies : hobbies).includes('reading')}
-                onChange={handleCheckboxChange}
+                value="reading"
+                name='reading'
+                checked={hobbies.includes('reading')}
+              
+                // onChange={handleCheckboxChange}
+                onChange={handleChange(e)}
+
               />
               Reading
             </label>
@@ -184,9 +166,11 @@ const dispatch  = useDispatch();
               className='mx-1'
                 type="checkbox"
                 value="traveling"
-                // checked={hobbies.includes('traveling')}
-                checked={(editData ? editData.hobbies : hobbies).includes('traveling')}
-                onChange={handleCheckboxChange}
+                name='traveling'
+                checked={hobbies.includes('traveling')}
+             
+             onChange={handleChange(e)}
+
               />
               Traveling
             </label>
@@ -194,9 +178,11 @@ const dispatch  = useDispatch();
              className='mx-1'
                 type="checkbox"
                 value="chess"
-                // checked={hobbies.includes('chess')}
-                checked={(editData ? editData.hobbies : hobbies).includes('chess')}
-                onChange={handleCheckboxChange}
+                name='chess'
+                checked={hobbies.includes('chess')}
+             
+             onChange={handleChange(e)}
+
               />
               chess
             {/* Add more hobbies as needed */}
@@ -208,14 +194,13 @@ const dispatch  = useDispatch();
             <input
             type="date"
             id="birthday"
-            name="birthday"
-            value={dob || editData?.dob }
-            onChange={(e)=> setDob(e.target.value)}
+            name="dob"
+            value="dob"
+            // onChange={(e)=> setDob(e.target.value)}
+            onChange={handleChange(e)}
+
             />
-          {/* <label>
-            Date of Birth:
-            <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
-          </label> */}
+         
           <br />
     
           {/* Submit Button */}
@@ -317,5 +302,4 @@ const dispatch  = useDispatch();
 );
 }
 
-export default StudentForm
-{/* <Table /> */}
+export default Formm
