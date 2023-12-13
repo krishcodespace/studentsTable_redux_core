@@ -18,6 +18,8 @@ function StudentForm() {
   const [gender, setGender] = useState('');
   const [hobbies, setHobbies] = useState([]);
   const [dob, setDob] = useState('');
+
+  
   const [value, setValue] = useState()
   const [editData, setEditData] = useState()
   const [finalData, setFinalData] = useState()
@@ -101,7 +103,31 @@ const dispatch  = useDispatch();
 }
 
     const handleUpdate=()=>{
-    console.log('name.address,gender,dob', name,address,gender,dob)
+
+
+
+      const formData = {
+        name: name || editData?.name ,
+        address: address || editData?.address ,
+        gender: gender || editData.gender,
+        hobbies: hobbies || editData?.hobbies?.[0],
+        dob: dob ||  editData?.dob,
+      };
+  
+      
+    // Log form values
+        console.log('formData', formData)
+
+        console.log('name.address,gender,dob', name,address,gender,dob)
+        // const newData = ...formData,
+
+        setName("");
+        setAddress("");
+        setGender("");
+        setHobbies([]);
+        setDob("")
+        setShow(false)
+
     const editdata = editData;  
 //     const index = editindex
 //   dispatch(updateData(index,editdata))
