@@ -123,8 +123,10 @@ console.log('name,value,type,checked', name,value,type,checked)
 
   return (
     <div>
-      <div className="inputfeilds">
+      <div className="inputfeilds flex flex-col justify-center items-center mt-2">
         <input
+          className='w-1/4'
+        
           type="text"
           name="name"
           value={inputdata.name}
@@ -132,6 +134,8 @@ console.log('name,value,type,checked', name,value,type,checked)
           placeholder="Name"
         />
         <input
+          className='w-1/4 mt-3'
+
           type="text"
           name="address"
           value={inputdata.address}
@@ -139,63 +143,71 @@ console.log('name,value,type,checked', name,value,type,checked)
           placeholder="Address"
         />
         <label>
-    Gender:
-    <input
-      type="radio"
-      name="gender"
-      value="male"
-      checked={inputdata.gender === 'male'}
-      onChange={handleChange}
-    />
-    Male
-    <input
-      type="radio"
-      name="gender"
-      value="female"
-      checked={inputdata.gender === 'female'}
-      onChange={handleChange}
-    />
-    Female
-  </label>
+        Gender:
+        <input
+        className='m-3'
+          type="radio"
+          name="gender"
+          value="male"
+          checked={inputdata.gender === 'male'}
+          onChange={handleChange}
+        />
+        Male
+        <input
+        className='m-3'
 
-  <label>
-    Hobbies:
-    <div>
-      <input
-        type="checkbox"
-        name="reading"
-        value="reading"
-        checked={inputdata.hobbies === "reading"}
-        onChange={handleChange}
-      />
-      Reading
-    </div>
-    <div>
-      <input
-        type="checkbox"
-        name="traveling"
-        value="traveling"
-        checked={inputdata.hobbies === "traveling"}
-        onChange={handleChange}
-      />
-      Traveling
-    </div>
-    <div>
-      <input
-        type="checkbox"
-        name="chess"
-        value="chess"
-        checked={inputdata.hobbies === "chess"}
-        onChange={handleChange}
-      />
-      chess
-    </div>
-  </label>
+          type="radio"
+          name="gender"
+          value="female"
+          checked={inputdata.gender === 'female'}
+          onChange={handleChange}
+        />
+        Female
+      </label>
+
+    <label className='flex '>
+      Hobbies:
+      <div>
+        <input
+        className='mx-3'
+          type="checkbox"
+          name="reading"
+          value="reading"
+          checked={inputdata.hobbies === "reading"}
+          onChange={handleChange}
+        />
+        Reading
+      </div>
+      <div>
+        <input
+        className='mx-3'
+          type="checkbox"
+          name="traveling"
+          value="traveling"
+          checked={inputdata.hobbies === "traveling"}
+          onChange={handleChange}
+        />
+        Traveling
+      </div>
+      <div>
+        <input
+        className='mx-3'
+
+          type="checkbox"
+          name="chess"
+          value="chess"
+          checked={inputdata.hobbies === "chess"}
+          onChange={handleChange}
+        />
+        chess
+      </div>
+    </label>
 
         <div>
           <label>
             Date of Birth:
             <input
+            className='mt-3'
               type="date"
               name="dob"
               value={inputdata.dob}
@@ -204,7 +216,7 @@ console.log('name,value,type,checked', name,value,type,checked)
           </label>
         </div>
         {
-            showbtn ? <button type='button' onClick={handleUpdate}>update</button> :<button type='submit' onClick={handleSubmit}>
+            showbtn ? <button type='button' className='mt-2 border w-1/6' onClick={handleUpdate}>update</button> :<button className='mt-2 border w-1/6' type='submit' onClick={handleSubmit}>
             add
         </button>
         }
@@ -214,7 +226,7 @@ console.log('name,value,type,checked', name,value,type,checked)
 
       {/* table start here*/}
 
-      <div className="table">
+      <div className="table mt-3 w-full">
       <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

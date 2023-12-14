@@ -118,7 +118,7 @@ const studentReducer = (state = initialState, action) => {
           finalD: state.finalD.map((item, i) =>
           // when action.paylod index is match to finalD items then payload eidtdata take and not update then take item as well as
             i === action.payload.index ? action.payload.editdata : item
-          ),
+          ),  
         };
  
     default:

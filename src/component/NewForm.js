@@ -12,12 +12,12 @@ function NewForm() {
     const [editData, setEditData] = useState(null)
     const [showbtn, setshowBtn] = useState(false)
     const [index, setIndex] = useState(null)
-  const [inputdata, setInputdata] = useState({
+    const [inputdata, setInputdata] = useState({
     name: '',
     address: '',
     gender: '',
     dob: '',
-  });
+    });
 
   const dispatch = useDispatch();
 
